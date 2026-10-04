@@ -1,9 +1,12 @@
-/* ================== v82: 3 Prismais animados (Baleiúda, Chifrossos, Geleporo) + mercado online entre jogadores ================== */
+/* ================== v82: 6 Prismais animados (Baleiúda, Chifrossos, Geleporo, Joanela, Fogarilho, Rochassauro) + mercado online entre jogadores ================== */
 /* ---------- 1. Prismais novos com animação quadro a quadro ---------- */
 const CR82=[
  ['baleiuda','Baleiúda','mare','guardiao',2,[48,22,34,18],'costa','Jato de Espuma','Filhote de baleia que vive nas poças da Costa de Vidro. Espirra água quando está contente.','waterblubby'],
  ['chifrossos','Chifrossos','eter','sabotador',3,[36,46,24,40],'pantano','Garra Sepulcral','Esqueleto chifrudo que vaga no Pântano Lunar. Ri alto antes de atacar.','undeadskeleton'],
- ['geleporo','Geleporo','mare','fera',3,[34,46,22,44],'cume','Garra de Gelo','Lebre de cristal de gelo. Bravo por fora, sorri quando vence uma luta.','icerabbit']];
+ ['geleporo','Geleporo','mare','fera',3,[34,46,22,44],'cume','Garra de Gelo','Lebre de cristal de gelo. Bravo por fora, sorri quando vence uma luta.','icerabbit'],
+ ['joanela','Joanela','seiva','arauto',2,[38,24,26,32],'vale','Pólen Curativo','Potrinha com casco de joaninha. Bate as asinhas e espalha pólen que cura os amigos.','horseladybug'],
+ ['fogarilho','Fogarilho','brasa','fera',1,[30,30,18,30],'picos','Bochecha Ardente','Hamster de fogo que guarda brasas nas bochechas. Esquenta quando fica animado.','firehamster'],
+ ['rochassauro','Rochassauro','rocha','guardiao',3,[60,30,48,14],'bosque','Casco de Pedra','Dinossauro de pedra com folhas nas costas. Dorme tão parado que vira parte da trilha.','earthdino']];
 (function(){try{const W={1:9,2:6,3:3,4:1.2};CR82.forEach(([id,n,el,role,r,st,reg,sk,desc,f])=>{if(!SP[id])def(id,{n,el,role,r,st,reg,sk,desc});if(COLLECT.indexOf(id)<0)COLLECT.push(id);
   const R=REG[reg];if(R&&R.pool&&!R.pool.some(x=>x[0]===id))R.pool.push([id,W[r]||3,r>=3?3:1]);
   IMG[id]='cr82/'+f+'_icon.webp';IMGS.add(id);SHEET[id]='cr82/'+f+'_base.webp';});}catch(e){console.warn('v82 def',e);}})();
