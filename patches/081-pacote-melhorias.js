@@ -2,28 +2,10 @@
 /* ---------- selo da Lovable fora ---------- */
 (function(){const st=document.createElement('style');st.textContent='#lovable-badge,[id^="lovable-badge"],a[href*="lovable.dev"][style*="fixed"]{display:none!important}';document.head.appendChild(st);setInterval(()=>{try{const b=document.getElementById('lovable-badge');if(b)b.remove();}catch(e){}},1500);})();
 
-/* ---------- 1. Master vivo: tronco e pernas animados separados ---------- */
+/* ---------- 1. (animação em duas partes removida a pedido do usuário) ---------- */
 (function(){const st=document.createElement('style');st.id='v81anim';st.textContent=`
-html body .unit.pl .spr::before,html body .unit.pl .spr::after{content:""!important;position:absolute!important;left:50%!important;bottom:-6%!important;height:122%!important;aspect-ratio:2/3!important;background:var(--tjs) 0 0/600% 100% no-repeat!important;pointer-events:none!important;z-index:1!important;filter:drop-shadow(0 3px 2px rgba(0,0,0,.3))!important;border-radius:0!important;width:auto!important;top:auto!important;opacity:1!important}
-html body .unit.pl .spr::before{clip-path:inset(56% 0 0 0)!important;transform-origin:50% 100%!important;animation:f81 1.6s steps(1) infinite,l81 1.6s ease-in-out infinite!important}
-html body .unit.pl .spr::after{clip-path:inset(0 0 43% 0)!important;transform-origin:50% 58%!important;animation:f81 1.6s steps(1) infinite,u81 1.6s ease-in-out infinite!important;z-index:2!important}
-@keyframes f81{0%{background-position:0% 0}50%{background-position:20% 0}}
-@keyframes l81{0%,100%{transform:translateX(-50%) scale(1,1)}50%{transform:translateX(-50%) scale(1.015,.985)}}
-@keyframes u81{0%,100%{transform:translateX(-50%) translateY(0) rotate(0)}20%{transform:translateX(-50%) translateY(-2.5px) rotate(-2deg)}50%{transform:translateX(-50%) translateY(-1px) rotate(.5deg)}70%{transform:translateX(-50%) translateY(-3px) rotate(2.2deg)}}
-html body .unit.pl .spr.tp2::before,html body .unit.pl .spr.tp2::after{background-position:20% 0!important}
-html body .unit.pl .spr.tp2::before{animation:none!important;transform:translateX(-50%)!important}
-html body .unit.pl .spr.tp2::after{animation:w81 .22s ease-out forwards!important;filter:drop-shadow(0 0 7px rgba(255,214,110,.9)) drop-shadow(0 3px 2px rgba(0,0,0,.3))!important}
-@keyframes w81{to{transform:translateX(calc(-50% - 4px)) translateY(-2px) rotate(-11deg)}}
-html body .unit.pl .spr.tp3::before,html body .unit.pl .spr.tp3::after{background-position:0% 0!important}
-html body .unit.pl .spr.tp3::before{animation:none!important;transform:translateX(calc(-50% + 2px))!important}
-html body .unit.pl .spr.tp3::after{animation:c81 .28s cubic-bezier(.2,1.5,.4,1) forwards!important;filter:drop-shadow(0 0 9px rgba(255,230,150,.95)) drop-shadow(0 3px 2px rgba(0,0,0,.3))!important}
-@keyframes c81{from{transform:translateX(calc(-50% - 4px)) rotate(-11deg)}to{transform:translateX(calc(-50% + 6px)) rotate(9deg)}}
-html body .unit.pl .spr.tp4::before,html body .unit.pl .spr.tp4::after{background-position:80% 0!important;animation:h81 .32s ease-out!important}
-@keyframes h81{0%,100%{transform:translateX(-50%)}35%{transform:translateX(calc(-50% - 6px)) rotate(-4deg)}}
-html body .unit.pl .spr.tp5::before,html body .unit.pl .spr.tp5::after{background-position:100% 0!important;animation:v81 .55s ease-out infinite alternate!important}
-@keyframes v81{from{transform:translateX(-50%) translateY(0)}to{transform:translateX(-50%) translateY(-7px)}}
 .orb73.hit{animation-duration:.2s!important}
-@media (prefers-reduced-motion:reduce){html body .unit.pl .spr::before,html body .unit.pl .spr::after{animation:f81 1.6s steps(1) infinite!important}}`;document.head.appendChild(st);})();
+`;document.head.appendChild(st);})();
 
 /* ---------- 2. sem equipar sozinho + bolinhas de equipamento melhor ---------- */
 function better81(){try{return ensureGear().inv.filter(betterThanEq);}catch(e){return [];}}
@@ -123,7 +105,7 @@ function openMarket(t){if(t)mkTab=t;const M=mk81();save();const now=Date.now();
     S.prim=S.prim.filter(x=>x!==p);M.ads.push({id:Date.now()+'',p,price:Math.round(v*cfg[0]),end:Date.now()+cfg[1]*60000,ok:cfg[2]});save();toast(`${SP[p.sp].n} anunciado!`);openMarket('ads');});
   document.querySelectorAll('[data-mkc]').forEach(b=>b.onclick=()=>{const a=M.ads.find(x=>x.id===b.dataset.mkc);if(!a||a.done)return;S.prim.push(a.p);M.ads=M.ads.filter(x=>x!==a);save();toast('Anúncio cancelado.');openMarket('ads');});}
 setInterval(()=>{try{if(S&&S.mk)mk81();}catch(e){}},30000);
-setInterval(()=>{try{const cs=document.querySelector('.cityscene');if(cs&&!cs.querySelector('[data-bld="mercado81"]')){const b=document.createElement('button');b.className='cb';b.dataset.bld='mercado81';b.style.left='30%';b.style.top='83%';b.innerHTML='<span class="cblab">Mercado</span>';b.onclick=()=>openMarket('buy');cs.appendChild(b);}}catch(e){}},800);
+setInterval(()=>{try{const cs=document.querySelector('.cityscene');if(cs&&!cs.querySelector('[data-bld="mercado81"]')){const b=document.createElement('button');b.className='cb';b.dataset.bld='mercado81';b.style.left='30%';b.style.top='83%';b.innerHTML='<span class="cblab">Mercado</span>';b.onclick=()=>openMarket();cs.appendChild(b);}}catch(e){}},800);
 
 /* ---------- 9. velocidades 1 a 4 (o 4 é o antigo 2) ---------- */
 const SPD81={1:1,2:1.17,3:1.33,4:1.5};

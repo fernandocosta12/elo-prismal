@@ -11,4 +11,5 @@ for(const f of files){const src=fs.readFileSync('patches/'+f,'utf8').replace(/\s
 h=h.replace(T,()=>add+T);
 fs.mkdirSync('_site',{recursive:true});fs.writeFileSync('_site/index.html',h);fs.writeFileSync('_site/game.html',h);
 for(const f of ['cms_atlas.webp'])fs.copyFileSync(f,'_site/'+f);
+fs.cpSync('cr82','_site/cr82',{recursive:true});
 fs.writeFileSync('_site/.nojekyll','');console.log('ok',h.length);
