@@ -11,16 +11,18 @@ const CR82=[
 (function(){try{const W={1:9,2:6,3:3,4:1.2};CR82.forEach(([id,n,el,role,r,st,reg,sk,desc,f])=>{if(!SP[id])def(id,{n,el,role,r,st,reg,sk,desc});if(COLLECT.indexOf(id)<0)COLLECT.push(id);
   const R=REG[reg];if(R&&R.pool&&!R.pool.some(x=>x[0]===id))R.pool.push([id,W[r]||3,r>=3?3:1]);
   IMG[id]='cr82/'+f+'_icon.webp';IMGS.add(id);SHEET[id]='cr82/'+f+'_base.webp';});}catch(e){console.warn('v82 def',e);}})();
-const CR82F={};CR82.forEach(c=>CR82F[c[0]]=c[9]);
+const CR82H=new Set(['lontrovao']);const CR82F={};CR82.forEach(c=>CR82F[c[0]]=c[9]);
 (function(){const st=document.createElement('style');st.textContent=`
 .unit:not(.dead) .sheet.cr82:not(.pose),.walker .sheet.cr82,.hstage .sheet.cr82{background-image:var(--i)!important;background-size:1500% 100%!important;animation:cr82 1.7s steps(15,jump-none) infinite!important}
+.unit .sheet.cr82.h82{background-image:var(--h)!important;background-size:1500% 100%!important;animation:cr82 .55s steps(15,jump-none) 1 forwards!important}
 .unit .sheet.cr82.a82{background-image:var(--k)!important;background-size:1500% 100%!important;animation:cr82 .6s steps(15,jump-none) 1 forwards!important}
 @keyframes cr82{from{background-position:0% 0}to{background-position:100% 0}}`;document.head.appendChild(st);
   /* pré-carrega as tiras para não piscar */
   CR82.forEach(c=>['idle','atk'].forEach(k=>{const i=new Image();i.src='cr82/'+c[9]+'_'+k+'.webp';}));})();
-sheetArt=(function(o){return function(id,g){let h=o.apply(this,arguments);const f=CR82F[id];if(f&&h.indexOf('art sheet')>=0)h=h.replace('class="art sheet','class="art sheet cr82').replace('style="',`style="--i:url(cr82/${f}_idle.webp);--k:url(cr82/${f}_atk.webp);`);return h;};})(sheetArt);
+sheetArt=(function(o){return function(id,g){let h=o.apply(this,arguments);const f=CR82F[id];if(f&&h.indexOf('art sheet')>=0)h=h.replace('class="art sheet','class="art sheet cr82').replace('style="',`style="--i:url(cr82/${f}_idle.webp);--k:url(cr82/${f}_atk.webp);${CR82H.has(f)?`--h:url(cr82/${f}_hit.webp);`:''}`);return h;};})(sheetArt);
 pose=(function(o){return function(u,frame,ms){o.apply(this,arguments);try{const el=uel(u);const sh=el&&el.querySelector('.sheet.cr82');if(!sh)return;
   if(frame===2){sh.classList.remove('a82');void sh.offsetWidth;sh.classList.add('a82');clearTimeout(sh._a);sh._a=setTimeout(()=>sh.classList.remove('a82'),650);}
+  else if(frame===4&&CR82H.has(CR82F[u.sp])){sh.classList.remove('a82','h82');void sh.offsetWidth;sh.classList.add('h82');clearTimeout(sh._h);sh._h=setTimeout(()=>sh.classList.remove('h82'),600);}
   else if(frame!==3)sh.classList.remove('a82');}catch(e){}};})(pose);
 
 /* ---------- 2. Mercado online: anúncios guardados no servidor ---------- */
