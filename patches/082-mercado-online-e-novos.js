@@ -12,11 +12,23 @@ const CR82=[
  ['brotim','Brotim','seiva','arauto',2,[40,22,26,30],'vale','Estrela Curativa','Bolinho alado com um broto na cabeça. A estrelinha da antena brilha quando ele cura os amigos.','brotim'],
  ['raposelo','Raposelo','mare','fera',3,[34,48,24,42],'cume','Soco Gélido','Raposinha de folhas de gelo. Parece fofa, mas fecha a cara e solta socos congelantes quando o time precisa.','raposelo'],
  ['fenixim','Fenixim','brasa','sabotador',3,[34,48,22,42],'picos','Asas de Brasa','Filhote de fênix de cara fechada. Abre as asas em chamas e grita tão alto que esquenta o ar.','fenixim'],
- ['mascarim','Mascarim','eter','sabotador',4,[38,52,26,48],'bosque','Garra Mascarada','Guaxinim sombrio que usa uma máscara antiga de raposa. Ninguém sabe o que há por baixo dela.','mascarim']];
+ ['mascarim','Mascarim','eter','sabotador',4,[38,52,26,48],'bosque','Garra Mascarada','Guaxinim sombrio que usa uma máscara antiga de raposa. Ninguém sabe o que há por baixo dela.','mascarim'],
+ ['cristalossauro','Cristalossauro','rocha','guardiao',3,[58, 32, 46, 14],'picos','Escamas de Safira','Lagartão de cristal azul. Cada espinho das costas é uma pedra preciosa.','bluerock'],
+ ['palmudo','Palmudo','seiva','guardiao',2,[50, 24, 38, 14],'costa','Abraço de Coqueiro','Golem de pedra com folhas de palmeira na cabeça. Adora sombra e água fresca.','earthpalm'],
+ ['javaraio','Javaraio','tormenta','fera',3,[38, 46, 26, 40],'cume','Investida Elétrica','Javali de pelo amarelo que carrega raios nas presas. Corre tão rápido que solta faíscas.','electricboar'],
+ ['louvabrasa','Louvabrasa','brasa','sabotador',3,[30, 48, 20, 48],'deserto','Foice Ardente','Louva-a-deus de fogo. Fica imóvel esperando, e então ataca num piscar de olhos.','firemantis'],
+ ['flamaflor','Flamaflor','brasa','arauto',2,[36, 30, 24, 32],'vale','Pétala Quente','Florzinha de pétalas de fogo com rabo de chama. Aquece os amigos em noites frias.','florflare'],
+ ['touraurum','Touraurum','rocha','guardiao',4,[66, 40, 52, 18],'deserto','Chifre Dourado','Minotauro de armadura dourada. Guarda tesouros antigos nas dunas.','goldtaur'],
+ ['cangurrama','Cangurrama','seiva','arauto',2,[42, 24, 28, 30],'bosque','Bolsa de Brotos','Canguru de focinho longo que carrega um broto na bolsa e cura com seiva.','growbaroo'],
+ ['garcaferro','Garça de Ferro','rocha','sabotador',2,[32, 36, 30, 34],'charco','Bico de Aço','Garça de penas metálicas que pesca nos charcos. Seu bico corta como lâmina.','irongoose'],
+ ['tamanduco','Tamanduco','seiva','fera',1,[32, 28, 20, 28],'pantano','Língua Comprida','Tamanduá de crina espetada que fareja formigas a quilômetros.','longtrunk'],
+ ['pandurao','Pandurão','eter','mistico',2,[34, 36, 22, 32],'bosque','Rolada Zen','Furão-panda tranquilão. Medita no topo das árvores e solta ondas de calma.','pandaferret'],
+ ['vespurpura','Vespúrpura','eter','sabotador',3,[30, 46, 20, 48],'pantano','Ferrão Real','Vespa roxa de chifre único. Guerreira da colmeia, nunca recua.','purplehornet'],
+ ['mangustim','Mangustim','seiva','fera',1,[30, 30, 18, 32],'vale','Mordida Rápida','Mangusto bravinho do vale. Pequeno, mas encara qualquer serpente.','naturemongoose']];
 (function(){try{const W={1:9,2:6,3:3,4:1.2};CR82.forEach(([id,n,el,role,r,st,reg,sk,desc,f])=>{if(!SP[id])def(id,{n,el,role,r,st,reg,sk,desc});if(COLLECT.indexOf(id)<0)COLLECT.push(id);
   const R=REG[reg];if(R&&R.pool&&!R.pool.some(x=>x[0]===id))R.pool.push([id,W[r]||3,r>=3?3:1]);
   IMG[id]='cr82/'+f+'_icon.webp';IMGS.add(id);SHEET[id]='cr82/'+f+'_base.webp';});}catch(e){console.warn('v82 def',e);}})();
-const CR82H=new Set(['lontrovao','jacarrocha','brotim','raposelo','fenixim','mascarim']);const CR82F={};CR82.forEach(c=>CR82F[c[0]]=c[9]);
+const CR82H=new Set(['lontrovao','jacarrocha','brotim','raposelo','fenixim','mascarim','bluerock','earthpalm','electricboar','firemantis','florflare','goldtaur','growbaroo','irongoose','longtrunk','pandaferret','purplehornet','naturemongoose']);const CR82F={};CR82.forEach(c=>CR82F[c[0]]=c[9]);
 (function(){const st=document.createElement('style');st.textContent=`
 .unit:not(.dead) .sheet.cr82:not(.pose),.walker .sheet.cr82,.hstage .sheet.cr82{background-image:var(--i)!important;background-size:1500% 100%!important;animation:cr82 1.7s steps(15,jump-none) infinite!important}
 .unit .sheet.cr82.h82{background-image:var(--h)!important;background-size:1500% 100%!important;animation:cr82 .55s steps(15,jump-none) 1 forwards!important}
