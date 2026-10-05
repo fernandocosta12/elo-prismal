@@ -9,11 +9,12 @@ const CR82=[
  ['rochassauro','Rochassauro','rocha','guardiao',3,[60,30,48,14],'bosque','Casco de Pedra','Dinossauro de pedra com folhas nas costas. Dorme tão parado que vira parte da trilha.','earthdino'],
  ['lontrovao','Lontrovão','tormenta','fera',3,[34,48,22,46],'charco','Garra Elétrica','Lontra azul com um raio no peito. Quando se irrita, as garras soltam faíscas.','lontrovao'],
  ['jacarrocha','Jacarrocha','rocha','fera',2,[40,40,30,22],'deserto','Mordida de Pedra','Jacarezinho de casca espinhosa que vive nas dunas. Ri com a boca toda aberta antes de morder.','jacarrocha'],
- ['brotim','Brotim','seiva','arauto',2,[40,22,26,30],'vale','Estrela Curativa','Bolinho alado com um broto na cabeça. A estrelinha da antena brilha quando ele cura os amigos.','brotim']];
+ ['brotim','Brotim','seiva','arauto',2,[40,22,26,30],'vale','Estrela Curativa','Bolinho alado com um broto na cabeça. A estrelinha da antena brilha quando ele cura os amigos.','brotim'],
+ ['raposelo','Raposelo','mare','fera',3,[34,48,24,42],'cume','Soco Gélido','Raposinha de folhas de gelo. Parece fofa, mas fecha a cara e solta socos congelantes quando o time precisa.','raposelo']];
 (function(){try{const W={1:9,2:6,3:3,4:1.2};CR82.forEach(([id,n,el,role,r,st,reg,sk,desc,f])=>{if(!SP[id])def(id,{n,el,role,r,st,reg,sk,desc});if(COLLECT.indexOf(id)<0)COLLECT.push(id);
   const R=REG[reg];if(R&&R.pool&&!R.pool.some(x=>x[0]===id))R.pool.push([id,W[r]||3,r>=3?3:1]);
   IMG[id]='cr82/'+f+'_icon.webp';IMGS.add(id);SHEET[id]='cr82/'+f+'_base.webp';});}catch(e){console.warn('v82 def',e);}})();
-const CR82H=new Set(['lontrovao','jacarrocha','brotim']);const CR82F={};CR82.forEach(c=>CR82F[c[0]]=c[9]);
+const CR82H=new Set(['lontrovao','jacarrocha','brotim','raposelo']);const CR82F={};CR82.forEach(c=>CR82F[c[0]]=c[9]);
 (function(){const st=document.createElement('style');st.textContent=`
 .unit:not(.dead) .sheet.cr82:not(.pose),.walker .sheet.cr82,.hstage .sheet.cr82{background-image:var(--i)!important;background-size:1500% 100%!important;animation:cr82 1.7s steps(15,jump-none) infinite!important}
 .unit .sheet.cr82.h82{background-image:var(--h)!important;background-size:1500% 100%!important;animation:cr82 .55s steps(15,jump-none) 1 forwards!important}
