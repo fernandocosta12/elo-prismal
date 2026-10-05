@@ -16,7 +16,7 @@ const CR82H=new Set(['lontrovao','jacarrocha']);const CR82F={};CR82.forEach(c=>C
 (function(){const st=document.createElement('style');st.textContent=`
 .unit:not(.dead) .sheet.cr82:not(.pose),.walker .sheet.cr82,.hstage .sheet.cr82{background-image:var(--i)!important;background-size:1500% 100%!important;animation:cr82 1.7s steps(15,jump-none) infinite!important}
 .unit .sheet.cr82.h82{background-image:var(--h)!important;background-size:1500% 100%!important;animation:cr82 .55s steps(15,jump-none) 1 forwards!important}
-.unit .sheet.cr82.a82{background-image:var(--k)!important;background-size:1500% 100%!important;animation:cr82 .6s steps(15,jump-none) 1 forwards!important}
+.unit .sheet.cr82.a82{background-image:var(--k)!important;background-size:1500% 100%!important;animation:cr82 .75s steps(15,jump-none) 1 forwards!important}
 @keyframes cr82{from{background-position:0% 0}to{background-position:100% 0}}`;document.head.appendChild(st);
   /* pré-carrega as tiras para não piscar */
   CR82.forEach(c=>['idle','atk'].forEach(k=>{const i=new Image();i.src='cr82/'+c[9]+'_'+k+'.webp';}));})();
