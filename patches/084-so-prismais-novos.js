@@ -19,3 +19,11 @@
   Object.keys(REG).forEach(k=>{const R=REG[k];if(P[k])R.pool=P[k].filter(x=>SP[x[0]]);else if(R.pool)R.pool=R.pool.filter(x=>NEW.has(x[0]));if(!R.pool||!R.pool.length)R.pool=P.vale;if(MIN[k])R.minion=MIN[k];});
   if(S&&S.mk&&S.mk.offers)S.mk.offers=S.mk.offers.filter(o=>NEW.has(o.sp));
 }catch(e){console.warn('v84',e);}})();
+/* v84b: troca os Prismais antigos que o jogador já tem pelos novos do mesmo elemento (mantém nível, potencial e posição no time) */
+function conv84(){try{if(!S||!S.prim)return;const NEW=Object.keys(CR82F).filter(k=>SP[k]);let n=0;
+  S.prim.forEach(p=>{const s=SP[p.sp];if(!s||!s.retired)return;const el=s.el,r=Math.min(s.r,4);
+    let c=NEW.filter(k=>SP[k].el===el);if(!c.length)c=NEW;
+    const d=Math.min(...c.map(k=>Math.abs(SP[k].r-r)));const opt=c.filter(k=>Math.abs(SP[k].r-r)===d);
+    const nsp=opt[p.id%opt.length];p.sp=nsp;const b=best(nsp);b.own=true;b.seen=Math.max(1,b.seen||0);n++;});
+  if(n){save();if(typeof cloudSave==='function')cloudSave(true);if(typeof refreshAll==='function')refreshAll();toast(`${n} Prismais ganharam visual novo!`);}}catch(e){console.warn('v84b',e);}}
+setInterval(conv84,2000);
