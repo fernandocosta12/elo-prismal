@@ -17,4 +17,6 @@ fs.mkdirSync('_site',{recursive:true});fs.writeFileSync('_site/index.html',h);fs
 for(const f of ['cms_atlas.webp'])fs.copyFileSync(f,'_site/'+f);
 fs.cpSync('cr82','_site/cr82',{recursive:true});
 if(fs.existsSync('bg86'))fs.cpSync('bg86','_site/bg86',{recursive:true,filter:s=>!/\.(png|svg)$/.test(s)});
+// Valdora: segundo jogo, publicado em /valdora/
+if(fs.existsSync('valdora'))fs.cpSync('valdora','_site/valdora',{recursive:true});
 fs.writeFileSync('_site/.nojekyll','');console.log('ok',h.length);
