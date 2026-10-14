@@ -14,7 +14,7 @@ const R84=[["['brasiui','gotelo','musgolho'].map(","['fogarilho','baleiuda','man
 for(const [a,b] of R84){if(!h.includes(a))console.log('v84: não achei',a);h=h.split(a).join(b);}
 
 fs.mkdirSync('_site',{recursive:true});fs.writeFileSync('_site/index.html',h);fs.writeFileSync('_site/game.html',h);
-for(const f of ['cms_atlas.webp'])fs.copyFileSync(f,'_site/'+f);
+for(const f of ['cms_atlas.webp','pipoya_atlas.webp'])fs.copyFileSync(f,'_site/'+f);
 fs.cpSync('cr82','_site/cr82',{recursive:true});
 if(fs.existsSync('bg86'))fs.cpSync('bg86','_site/bg86',{recursive:true,filter:s=>!/\.(png|svg)$/.test(s)});
 fs.writeFileSync('_site/.nojekyll','');console.log('ok',h.length);
