@@ -110,7 +110,7 @@ setInterval(()=>{try{const cs=document.querySelector('.cityscene');if(cs&&!cs.qu
 /* ---------- 9. velocidades 1 a 4 (o 4 é o antigo 2) ---------- */
 const SPD81={1:1,2:1.17,3:1.33,4:1.5};
 function spdLbl81(){const v='x'+(S.spd4||1);const a=document.getElementById('t69spdv');if(a&&a.textContent!==v)a.textContent=v;const b=document.getElementById('spdTxt');if(b&&b.textContent!==(S.spd4||1)+'×')b.textContent=(S.spd4||1)+'×';}
-setInterval(()=>{try{if(!S)return;if(!S.spd4)S.spd4=S.speed>=2?2:1;S.speed=S.spd4>1?2:1;if(typeof B!=='undefined'&&B&&!B.paused&&!B.over&&S.spd4>1){B.acc=(B.acc||0)-(1.5-SPD81[S.spd4]);}
+setInterval(()=>{try{if(!S)return;if(!S.spd4)S.spd4=S.speed>=2?2:1;S.speed=S.spd4>1?2:1;/* ritmo agora controlado no v88 */
   const sb=document.getElementById('spdBtn');if(sb&&!sb.dataset.s81){sb.dataset.s81=1;sb.onclick=()=>{S.spd4=(S.spd4||1)%4+1;S.speed=S.spd4>1?2:1;spdLbl81();save();toast('Velocidade x'+S.spd4);};}spdLbl81();}catch(e){}},100);
 
 /* ---------- estilos ---------- */
