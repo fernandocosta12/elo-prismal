@@ -7,4 +7,3 @@ Jogo publicado em GitHub Pages: https://fernandocosta12.github.io/elo-prismal/
 
 ## Créditos
 - Monstros do pacote "Cute monster Set #2 free version" por TrulyMalicious — CC-BY 4.0 (https://trulymalicious.itch.io/cute-monster-set-2-free).
-- Monstros do "Pipoya RPG Monster Pack" por Pipoya — uso livre (https://pipoya.itch.io/free-rpg-monster-pack).
