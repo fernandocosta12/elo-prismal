@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ActivityIndicator, Alert, Platform, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import { useAuth } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 import { calcBMI, getWaterGoalMl } from "@/lib/nutrition";
@@ -26,6 +27,7 @@ function bmiLabel(bmi: number) {
 
 export default function Perfil() {
   const { profile, session, signOut, refreshProfile } = useAuth();
+  const router = useRouter();
   const [deleting, setDeleting] = useState(false);
   const [uploading, setUploading] = useState(false);
   if (!profile) return null;
@@ -136,14 +138,15 @@ export default function Perfil() {
           />
         </Card>
 
-        {bmi > 0 && (
-          <Card style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-            <Muted>IMC</Muted>
-            <Text style={{ color: colors.text, fontWeight: "600" }}>
-              {bmi.toFixed(1)} · {bmiLabel(bmi)}
-            </Text>
-          </Card>
-        )}
+        <Card onPress={() => router.push("/ideais")} style={{ flexDirection: "row", alignItems: "center", gap: space.md }}>
+          <View style={{ flex: 1 }}>
+            <Text style={{ color: colors.text, fontWeight: "600", fontSize: 16 }}>Seus números ideais</Text>
+            <Muted style={{ fontSize: 13 }}>
+              {bmi > 0 ? `IMC ${bmi.toFixed(1)} · ${bmiLabel(bmi)} · ` : ""}peso, cintura e gordura ideais
+            </Muted>
+          </View>
+          <Ionicons name="chevron-forward" size={20} color={colors.faint} />
+        </Card>
 
         <View style={{ gap: space.sm, marginTop: space.lg }}>
           <Button title="Sair da conta" variant="soft" onPress={signOut} />

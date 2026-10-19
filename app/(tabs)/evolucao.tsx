@@ -2,7 +2,7 @@
 import { useCallback, useState } from "react";
 import { ActivityIndicator, Pressable, RefreshControl, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useFocusEffect } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import { useAuth } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 import { toISODate } from "@/lib/dates";
@@ -32,6 +32,7 @@ const dayLabel = (iso: string, n: number) => {
 
 export default function Evolucao() {
   const { session, profile } = useAuth();
+  const router = useRouter();
   const userId = session?.user.id;
   const [period, setPeriod] = useState<Period>(7);
   const [loading, setLoading] = useState(true);
@@ -142,6 +143,18 @@ export default function Evolucao() {
           <ActivityIndicator color={colors.primary} />
         ) : (
           <>
+            <Pressable
+              onPress={() => router.push("/ideais")}
+              style={{ flexDirection: "row", alignItems: "center", gap: space.md, backgroundColor: colors.primarySoft, borderRadius: radius.md, padding: space.lg }}
+              accessibilityRole="button"
+            >
+              <View style={{ flex: 1 }}>
+                <Text style={{ color: colors.text, fontWeight: "600" }}>Seus números ideais</Text>
+                <Text style={{ color: colors.muted, fontSize: 13 }}>IMC, peso, cintura e gordura: onde você está e qual o ideal</Text>
+              </View>
+              <Text style={{ color: colors.primary, fontSize: 20 }}>›</Text>
+            </Pressable>
+
             {/* Números principais */}
             <View style={{ flexDirection: "row", gap: space.sm }}>
               <Stat value={`${data.streak}`} label="dias seguidos" />
