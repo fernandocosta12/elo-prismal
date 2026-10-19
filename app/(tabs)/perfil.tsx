@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { Alert, ScrollView, Text, View } from "react-native";
+import { supabase } from "@/lib/supabase";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "@/lib/auth";
 import { calcBMI, getWaterGoalMl } from "@/lib/nutrition";
@@ -21,7 +23,34 @@ function bmiLabel(bmi: number) {
 
 export default function Perfil() {
   const { profile, session, signOut } = useAuth();
+  const [deleting, setDeleting] = useState(false);
   if (!profile) return null;
+
+  const doDelete = async () => {
+    setDeleting(true);
+    const { error } = await supabase.functions.invoke("delete-account", { body: {} });
+    setDeleting(false);
+    if (error) {
+      return Alert.alert("Não foi possível excluir", "Tente de novo em instantes. Se continuar, fale com o suporte.");
+    }
+    Alert.alert("Conta excluída", "Seus dados foram apagados. Obrigado por usar o app.");
+    await signOut();
+  };
+
+  // Duas confirmações, porque não tem volta
+  const confirmDelete = () =>
+    Alert.alert("Excluir sua conta?", "Todos os seus dados serão apagados para sempre. Isso não pode ser desfeito.", [
+      { text: "Cancelar", style: "cancel" },
+      {
+        text: "Continuar",
+        style: "destructive",
+        onPress: () =>
+          Alert.alert("Tem certeza?", "Última confirmação: excluir a conta agora.", [
+            { text: "Não", style: "cancel" },
+            { text: "Excluir definitivamente", style: "destructive", onPress: doDelete },
+          ]),
+      },
+    ]);
   const bmi = calcBMI(profile.weight ?? 0, profile.height ?? 0);
 
   return (
@@ -63,16 +92,10 @@ export default function Perfil() {
         )}
 
         <Button title="Sair da conta" variant="outline" onPress={signOut} />
-        <Button
-          title="Excluir minha conta"
-          variant="danger"
-          onPress={() =>
-            Alert.alert(
-              "Excluir conta",
-              "Essa função entra na próxima etapa, antes do envio para a App Store."
-            )
-          }
-        />
+        <Button title="Excluir minha conta" variant="danger" onPress={confirmDelete} loading={deleting} />
+        <Muted style={{ fontSize: 12, textAlign: "center" }}>
+          Excluir a conta apaga para sempre seus dados, refeições, treinos e histórico.
+        </Muted>
       </ScrollView>
     </SafeAreaView>
   );
