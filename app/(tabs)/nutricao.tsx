@@ -29,7 +29,7 @@ import {
   type MealAnalysis,
   type QuotaStatus,
 } from "@/lib/meals";
-import { Button, Card, Choice, Field, Muted, Title, styles as ui } from "@/components/ui";
+import { Bar, Button, Card, Choice, Field, Muted, Title, styles as ui } from "@/components/ui";
 import { colors, radius, space } from "@/theme";
 
 type Meal = {
@@ -119,7 +119,7 @@ export default function Nutricao() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.bg }} edges={["top"]}>
       <ScrollView
-        contentContainerStyle={{ padding: space.lg, gap: space.lg, paddingBottom: space.xl * 2 }}
+        contentContainerStyle={{ padding: space.xl, gap: space.lg, paddingBottom: space.xxl * 2 }}
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
@@ -142,9 +142,9 @@ export default function Nutricao() {
           </View>
           <Bar value={tot.kcal / goal.kcal} />
           <View style={{ flexDirection: "row", gap: space.md }}>
-            <MacroBar label="Proteína" v={tot.p} g={goal.p} color="#E57373" />
-            <MacroBar label="Carbo" v={tot.c} g={goal.c} color="#FFB74D" />
-            <MacroBar label="Gordura" v={tot.f} g={goal.f} color="#81C784" />
+            <MacroBar label="Proteína" v={tot.p} g={goal.p} color={colors.protein} />
+            <MacroBar label="Carbo" v={tot.c} g={goal.c} color={colors.carbs} />
+            <MacroBar label="Gordura" v={tot.f} g={goal.f} color={colors.fats} />
           </View>
         </Card>
 
@@ -225,26 +225,17 @@ function AddBtn({ icon, label, onPress }: { icon: any; label: string; onPress: (
           paddingVertical: space.lg,
           borderRadius: radius.md,
           backgroundColor: colors.card,
-          borderWidth: 1,
-          borderColor: colors.primary,
         },
         pressed && { opacity: 0.8 },
       ]}
     >
-      <Ionicons name={icon} size={24} color={colors.primary} />
+      <Ionicons name={icon} size={22} color={colors.text} />
       <Text style={{ color: colors.text, fontWeight: "600" }}>{label}</Text>
     </Pressable>
   );
 }
 
-function Bar({ value, color = colors.primary }: { value: number; color?: string }) {
-  const pct = Math.max(0, Math.min(1, value || 0)) * 100;
-  return (
-    <View style={{ height: 8, borderRadius: radius.pill, backgroundColor: colors.input, overflow: "hidden" }}>
-      <View style={{ width: `${pct}%`, height: "100%", backgroundColor: color }} />
-    </View>
-  );
-}
+
 
 function MacroBar({ label, v, g, color }: { label: string; v: number; g: number; color: string }) {
   return (
@@ -410,7 +401,7 @@ function AddMealModal({
                 onChangeText={setText}
                 multiline
                 placeholder="Ex: 2 ovos mexidos, 1 pão francês com manteiga e 1 café com leite"
-                placeholderTextColor="#777"
+                placeholderTextColor={colors.faint}
                 style={[ui.input, { minHeight: 110, textAlignVertical: "top" }]}
                 maxLength={600}
               />
