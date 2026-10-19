@@ -25,7 +25,7 @@ App iOS e Android feito com Expo (React Native), conectado ao banco Supabase `ri
 ## Próximas etapas
 
 1. Apple Saúde / Health Connect (treinos do relógio e peso da balança) — exige build próprio (não roda no Expo Go)
-2. Excluir conta dentro do app e login com Apple (exigências da App Store)
+2. (feito) Excluir conta dentro do app. Login com Apple só será exigido se houver login com Google/redes sociais
 3. Plano de treino por IA
 4. Clube, ranking e notificações
 5. Plano pago com compras dentro do app
