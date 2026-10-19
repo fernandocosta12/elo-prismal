@@ -1,0 +1,27 @@
+{
+  "expo": {
+    "name": "Ritmo",
+    "slug": "ritmo-app",
+    "scheme": "ritmo",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#0A0A0A",
+    "ios": {
+      "bundleIdentifier": "com.fernandocosta.ritmo",
+      "supportsTablet": false,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Usamos a câmera para você fotografar refeições e calcular a tabela nutricional.",
+        "NSPhotoLibraryUsageDescription": "Usamos suas fotos para analisar refeições e para a foto de perfil."
+      }
+    },
+    "android": {
+      "package": "com.fernandocosta.ritmo",
+      "backgroundColor": "#0A0A0A"
+    },
+    "plugins": ["expo-router"],
+    "experiments": {
+      "typedRoutes": false
+    }
+  }
+}
