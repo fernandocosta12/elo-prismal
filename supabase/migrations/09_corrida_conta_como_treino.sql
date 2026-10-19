@@ -1,4 +1,4 @@
--- PENDENTE: ainda não aplicada no banco (a aplicação foi cancelada por falta de aprovação).
+-- Aplicada em 18/10/2026 pelo SQL Editor do Supabase.
 -- Corrida passa a contar como treino do dia direto no Happy, sem criar um "treino fantasma".
 -- (O gatilho antigo podia falhar se já existisse um treino livre não concluído no mesmo dia.)
 create or replace function public.check_and_award_happy(_user_id uuid, _date date) returns void language plpgsql security definer set search_path to 'public' as $$

@@ -19,8 +19,8 @@ App iOS e Android feito com Expo (React Native), conectado ao banco Supabase `ri
 
 ## Pendências de configuração
 
-- **IA da Nutrição:** criar a chave em aistudio.google.com e cadastrar no Supabase em Edge Functions → Secrets com o nome `GEMINI_API_KEY`.
-- **Banco:** aplicar `supabase/migrations/09_corrida_conta_como_treino.sql` (corrida conta como treino no checklist).
+- (concluído) IA da Nutrição: chave GEMINI_API_KEY cadastrada.
+- (concluído) Banco: correção da corrida aplicada.
 
 ## Próximas etapas
 
