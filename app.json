@@ -19,9 +19,18 @@
       "package": "com.fernandocosta.ritmo",
       "backgroundColor": "#0A0A0A"
     },
+    "web": {
+      "bundler": "metro",
+      "output": "single",
+      "name": "Ritmo",
+      "shortName": "Ritmo",
+      "themeColor": "#0A0A0A",
+      "backgroundColor": "#0A0A0A"
+    },
     "plugins": ["expo-router"],
     "experiments": {
-      "typedRoutes": false
+      "typedRoutes": false,
+      "baseUrl": "/elo-prismal/ritmo"
     }
   }
 }

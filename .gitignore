@@ -7,3 +7,5 @@ android/
 *.log
 .DS_Store
 *.zip
+dist-web/
+dist-web-status.txt

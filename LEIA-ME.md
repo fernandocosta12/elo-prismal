@@ -11,7 +11,13 @@ App iOS e Android feito com Expo (React Native), conectado ao banco Supabase `ri
 - **Treino:** montar o treino do dia com a biblioteca de exercícios (ou exercícios próprios), marcar cada exercício, concluir o treino; registrar corrida com ritmo; histórico
 - **Perfil:** dados, metas, IMC e sair
 
-## Como testar no iPhone (pelo PC com Windows)
+## Testar pelo celular (sem PC)
+
+Abra no Safari: **https://fernandocosta12.github.io/elo-prismal/ritmo/**
+Para usar como app: botão Compartilhar → "Adicionar à Tela de Início".
+Para atualizar essa versão: dois cliques em `publicar-web.bat` no PC e publicar a pasta `dist-web` em `gh-pages/ritmo`.
+
+## Como testar no iPhone pelo Expo Go (pelo PC com Windows)
 
 1. Instale o **Expo Go** no iPhone (App Store, gratuito).
 2. Na pasta do projeto, dê dois cliques em **`abrir.bat`** (na primeira vez, use `iniciar.bat`, que instala tudo).
