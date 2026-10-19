@@ -45,6 +45,7 @@ function Gate() {
       <Stack.Screen name="cardapio" />
       <Stack.Screen name="mercado" />
       <Stack.Screen name="nova-senha" />
+      <Stack.Screen name="whatsapp" />
     </Stack>
   );
 }

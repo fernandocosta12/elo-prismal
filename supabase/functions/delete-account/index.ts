@@ -35,6 +35,8 @@ const USER_TABLES: [string, string][] = [
   ["body_measurements", "user_id"],
   ["shopping_items", "user_id"],
   ["meal_plans", "user_id"],
+  ["whatsapp_links", "user_id"],
+  ["whatsapp_link_codes", "user_id"],
   ["profiles", "user_id"],
 ];
 

@@ -148,6 +148,15 @@ export default function Perfil() {
           <Ionicons name="chevron-forward" size={20} color={colors.faint} />
         </Card>
 
+        <Card onPress={() => router.push("/whatsapp")} style={{ flexDirection: "row", alignItems: "center", gap: space.md }}>
+          <Ionicons name="logo-whatsapp" size={22} color={colors.success} />
+          <View style={{ flex: 1 }}>
+            <Text style={{ color: colors.text, fontWeight: "600", fontSize: 16 }}>WhatsApp</Text>
+            <Muted style={{ fontSize: 13 }}>Registre refeições, água e peso por mensagem</Muted>
+          </View>
+          <Ionicons name="chevron-forward" size={20} color={colors.faint} />
+        </Card>
+
         <Card onPress={() => router.push("/lembretes")} style={{ flexDirection: "row", alignItems: "center", gap: space.md }}>
           <Ionicons name="notifications-outline" size={22} color={colors.primary} />
           <View style={{ flex: 1 }}>
