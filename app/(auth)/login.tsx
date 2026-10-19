@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Alert, KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { supabase } from "@/lib/supabase";
+import { supabase, WEB_APP_URL } from "@/lib/supabase";
 import { Button, Field, Muted } from "@/components/ui";
 import { colors, space } from "@/theme";
 
@@ -31,10 +31,10 @@ export default function Login() {
         const { error } = await supabase.auth.signInWithPassword({ email: e, password });
         if (error) throw error;
       } else {
-        const { data, error } = await supabase.auth.signUp({ email: e, password });
+        const { data, error } = await supabase.auth.signUp({ email: e, password, options: { emailRedirectTo: WEB_APP_URL } });
         if (error) throw error;
         if (!data.session) {
-          Alert.alert("Quase lá!", "Enviamos um link de confirmação para o seu e-mail. Depois de confirmar, volte e entre.");
+          Alert.alert("Quase lá!", "Enviamos um link de confirmação para o seu e-mail. Toque no link para ativar sua conta e entrar.");
           setMode("entrar");
         }
       }
@@ -48,7 +48,7 @@ export default function Login() {
   const esqueciSenha = async () => {
     const e = email.trim().toLowerCase();
     if (!e) return Alert.alert("Digite seu e-mail primeiro");
-    const { error } = await supabase.auth.resetPasswordForEmail(e);
+    const { error } = await supabase.auth.resetPasswordForEmail(e, { redirectTo: `${WEB_APP_URL}nova-senha` });
     Alert.alert(
       error ? "Não deu certo" : "E-mail enviado",
       error ? traduzErro(error.message) : "Se existir uma conta com esse e-mail, você vai receber um link para criar uma nova senha."

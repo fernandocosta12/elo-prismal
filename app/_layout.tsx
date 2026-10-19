@@ -44,6 +44,7 @@ function Gate() {
       <Stack.Screen name="lembretes" />
       <Stack.Screen name="cardapio" />
       <Stack.Screen name="mercado" />
+      <Stack.Screen name="nova-senha" />
     </Stack>
   );
 }

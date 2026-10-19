@@ -1,7 +1,7 @@
 import "react-native-url-polyfill/auto";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createClient } from "@supabase/supabase-js";
-import { AppState } from "react-native";
+import { AppState, Platform } from "react-native";
 
 const url = process.env.EXPO_PUBLIC_SUPABASE_URL;
 const key = process.env.EXPO_PUBLIC_SUPABASE_KEY;
@@ -15,7 +15,8 @@ export const supabase = createClient(url, key, {
     storage: AsyncStorage,
     autoRefreshToken: true,
     persistSession: true,
-    detectSessionInUrl: false,
+    // No navegador, os links do e-mail (confirmar conta, nova senha) voltam com o login na URL
+    detectSessionInUrl: Platform.OS === "web",
   },
 });
 
@@ -24,3 +25,6 @@ AppState.addEventListener("change", (state) => {
   if (state === "active") supabase.auth.startAutoRefresh();
   else supabase.auth.stopAutoRefresh();
 });
+
+// Endereço do app para onde os links dos e-mails levam
+export const WEB_APP_URL = "https://fernandocosta12.github.io/elo-prismal/ritmo/";
