@@ -14,7 +14,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useFocusEffect } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { useAuth } from "@/lib/auth";
@@ -29,6 +29,8 @@ import {
   type MealAnalysis,
   type QuotaStatus,
 } from "@/lib/meals";
+import { lookupBarcode, forGrams, type Product } from "@/lib/barcode";
+import { BarcodeScanner } from "@/components/BarcodeScanner";
 import { Bar, Button, Card, Choice, Field, Muted, Title, styles as ui } from "@/components/ui";
 import { colors, radius, space } from "@/theme";
 
@@ -44,7 +46,7 @@ type Meal = {
   meal_time: string;
 };
 
-type Mode = null | "text" | "photo" | "manual";
+type Mode = null | "text" | "photo" | "manual" | "barcode";
 
 export default function Nutricao() {
   const { session, profile } = useAuth();
@@ -54,6 +56,7 @@ export default function Nutricao() {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [mode, setMode] = useState<Mode>(null);
+  const router = useRouter();
 
   const load = useCallback(async () => {
     if (!userId) return;
@@ -153,6 +156,7 @@ export default function Nutricao() {
           <View style={{ flexDirection: "row", gap: space.sm }}>
             <AddBtn icon="camera" label="Foto" onPress={() => setMode("photo")} />
             <AddBtn icon="chatbubble-ellipses" label="Descrever" onPress={() => setMode("text")} />
+            <AddBtn icon="barcode-outline" label="Código" onPress={() => setMode("barcode")} />
             <AddBtn icon="create" label="Manual" onPress={() => setMode("manual")} />
           </View>
           {quota && (
@@ -162,6 +166,12 @@ export default function Nutricao() {
                 : `Você usou as ${quota.limit} análises por IA de hoje. O registro manual continua liberado.`}
             </Muted>
           )}
+        </View>
+
+        {/* Cardápio e mercado */}
+        <View style={{ flexDirection: "row", gap: space.sm }}>
+          <LinkCard icon="sparkles-outline" title="Cardápio do dia" sub="Montado pela IA" onPress={() => router.push("/cardapio")} />
+          <LinkCard icon="cart-outline" title="Mercado" sub="Sua lista" onPress={() => router.push("/mercado")} />
         </View>
 
         {/* Refeições do dia */}
@@ -230,12 +240,30 @@ function AddBtn({ icon, label, onPress }: { icon: any; label: string; onPress: (
       ]}
     >
       <Ionicons name={icon} size={22} color={colors.text} />
-      <Text style={{ color: colors.text, fontWeight: "600" }}>{label}</Text>
+      <Text style={{ color: colors.text, fontWeight: "600", fontSize: 13 }}>{label}</Text>
     </Pressable>
   );
 }
 
 
+
+function LinkCard({ icon, title, sub, onPress }: { icon: any; title: string; sub: string; onPress: () => void }) {
+  return (
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => [
+        { flex: 1, flexDirection: "row", alignItems: "center", gap: space.sm, padding: space.md, borderRadius: radius.md, backgroundColor: colors.card },
+        pressed && { opacity: 0.8 },
+      ]}
+    >
+      <Ionicons name={icon} size={22} color={colors.primary} />
+      <View style={{ flex: 1 }}>
+        <Text style={{ color: colors.text, fontWeight: "600" }}>{title}</Text>
+        <Muted style={{ fontSize: 12 }}>{sub}</Muted>
+      </View>
+    </Pressable>
+  );
+}
 
 function MacroBar({ label, v, g, color }: { label: string; v: number; g: number; color: string }) {
   return (
@@ -283,8 +311,14 @@ function AddMealModal({
   const [draft, setDraft] = useState<Draft>(emptyDraft);
   const [mealType, setMealType] = useState<string>(guessMealType());
   const [busy, setBusy] = useState(false);
+  const [code, setCode] = useState("");
+  const [product, setProduct] = useState<Product | null>(null);
+  const [pgrams, setPgrams] = useState("");
 
   const reset = () => {
+    setCode("");
+    setProduct(null);
+    setPgrams("");
     setText("");
     setGrams("");
     setPhoto(null);
@@ -299,8 +333,41 @@ function AddMealModal({
     onClose();
   };
 
-  const noQuota = quota !== null && quota.remaining <= 0;
-  const showForm = mode === "manual" || analysis !== null;
+  const noQuota = quota !== null && quota.remaining <= 0 && mode !== "barcode";
+  const showForm = mode === "manual" || analysis !== null || product !== null;
+
+  // Código de barras: busca o produto e preenche a tabela pela quantidade
+  const fillFromProduct = (p: Product, g: number) => {
+    const v = forGrams(p, g);
+    setDraft({
+      meal_name: p.brand ? `${p.name} (${p.brand})` : p.name,
+      calories: String(v.calories),
+      protein: String(v.protein),
+      carbs: String(v.carbs),
+      fats: String(v.fats),
+      portion_size: `${g} g`,
+    });
+  };
+
+  const findProduct = async (raw: string) => {
+    setBusy(true);
+    try {
+      const p = await lookupBarcode(raw);
+      if (!p) {
+        setCode(raw);
+        return Alert.alert("Produto não encontrado", "Esse código ainda não está na base. Use Descrever ou Manual.");
+      }
+      if (!p.per100.calories) Alert.alert("Tabela incompleta", "A base não tem as calorias desse produto. Confira e preencha.");
+      const g = p.servingGrams ?? 100;
+      setProduct(p);
+      setPgrams(String(g));
+      fillFromProduct(p, g);
+    } catch (e: any) {
+      Alert.alert("Não deu certo", e.message);
+    } finally {
+      setBusy(false);
+    }
+  };
 
   const pickPhoto = async (source: "camera" | "library") => {
     const perm =
@@ -372,7 +439,8 @@ function AddMealModal({
     onSaved();
   };
 
-  const title = mode === "photo" ? "Refeição por foto" : mode === "text" ? "Descrever refeição" : "Registro manual";
+  const title =
+    mode === "photo" ? "Refeição por foto" : mode === "text" ? "Descrever refeição" : mode === "barcode" ? "Código de barras" : "Registro manual";
 
   return (
     <Modal visible={mode !== null} animationType="slide" presentationStyle="pageSheet" onRequestClose={close}>
@@ -391,6 +459,16 @@ function AddMealModal({
               <Text style={{ color: colors.text }}>Você já usou as {quota?.limit} análises por IA de hoje.</Text>
               <Muted>Amanhã o limite renova. Enquanto isso, registre manualmente.</Muted>
             </Card>
+          )}
+
+          {!showForm && mode === "barcode" && (
+            <>
+              <BarcodeScanner onCode={(c) => findProduct(c)} />
+              <Muted>{Platform.OS === "web" ? "Digite os números que ficam embaixo das barras." : "Ou digite os números embaixo das barras."}</Muted>
+              <Field label="Código de barras" value={code} onChangeText={setCode} keyboardType="number-pad" placeholder="Ex: 7891000100103" maxLength={14} />
+              <Button title="Buscar produto" onPress={() => findProduct(code)} loading={busy} disabled={code.replace(/\D/g, "").length < 8} />
+              <Muted style={{ fontSize: 12 }}>Dados da Open Food Facts, base aberta de alimentos.</Muted>
+            </>
           )}
 
           {!showForm && !noQuota && mode === "text" && (
@@ -433,6 +511,25 @@ function AddMealModal({
           {/* Etapa 2: conferir e salvar */}
           {showForm && (
             <>
+              {product && (
+                <Card style={{ gap: space.sm }}>
+                  <Text style={{ color: colors.text, fontWeight: "700" }}>{product.name}</Text>
+                  <Muted style={{ fontSize: 13 }}>
+                    Por 100 g: {Math.round(product.per100.calories)} kcal · P {product.per100.protein} g · C {product.per100.carbs} g · G {product.per100.fats} g
+                  </Muted>
+                  <Field
+                    label="Quanto você comeu (g ou ml)"
+                    value={pgrams}
+                    keyboardType="decimal-pad"
+                    onChangeText={(v) => {
+                      setPgrams(v);
+                      const g = Number(v.replace(",", "."));
+                      if (g > 0) fillFromProduct(product, g);
+                    }}
+                  />
+                </Card>
+              )}
+
               {analysis && (
                 <Card style={{ gap: space.sm }}>
                   <Text style={{ color: colors.text, fontWeight: "700" }}>O que a IA encontrou</Text>

@@ -27,7 +27,16 @@
       "themeColor": "#0A0A0A",
       "backgroundColor": "#0A0A0A"
     },
-    "plugins": ["expo-router"],
+    "plugins": [
+      "expo-router",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "O Ritmo usa a câmera para fotografar refeições e ler códigos de barras."
+        }
+      ],
+      "expo-notifications"
+    ],
     "experiments": {
       "typedRoutes": false,
       "baseUrl": "/elo-prismal/ritmo"

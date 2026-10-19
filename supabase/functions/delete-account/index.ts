@@ -32,6 +32,9 @@ const USER_TABLES: [string, string][] = [
   ["workouts", "user_id"],
   ["workout_plans", "user_id"],
   ["ai_usage", "user_id"],
+  ["body_measurements", "user_id"],
+  ["shopping_items", "user_id"],
+  ["meal_plans", "user_id"],
   ["profiles", "user_id"],
 ];
 

@@ -31,33 +31,35 @@ export function calcMacros(
   const bmr = calcBMR(age, gender, height, weight);
   const tdee = bmr * (ACTIVITY_MULTIPLIERS[activityLevel as ActivityLevel] ?? 1.45);
 
-  // Perda: déficit de 25% (~0,5 kg/semana). Ganho: superávit de 10%. Demais: manutenção.
-  let dailyCalories: number, p: number, c: number, f: number;
+  const factor = goalFactor(goal);
+  const m = splitMacros(tdee * factor, goal, gender);
+  return { bmr: Math.round(bmr * 100) / 100, tdee: Math.round(tdee), ...m };
+}
+
+// Distribui as calorias entre os macros conforme o objetivo, com piso de segurança.
+// Perda: déficit de 25% (~0,5 kg/semana). Ganho: superávit de 10%. Demais: manutenção.
+export function splitMacros(calories: number, goal: string | null, gender: string | null) {
+  let p: number, c: number, f: number;
   if (goal === "perda_de_peso") {
-    dailyCalories = tdee * 0.75;
     p = 0.4; c = 0.3; f = 0.3;
   } else if (goal === "ganho_de_massa") {
-    dailyCalories = tdee * 1.1;
     p = 0.3; c = 0.4; f = 0.3;
   } else {
-    dailyCalories = tdee;
     p = 0.25; c = 0.45; f = 0.3;
   }
-
-  // Piso de segurança para não recomendar metas abaixo do mínimo saudável
-  const minFloor = gender === "feminino" ? 1200 : 1500;
-  if (dailyCalories < minFloor) dailyCalories = minFloor;
-
+  const minFloor = minCalories(gender);
+  const dailyCalories = Math.round(Math.max(calories, minFloor));
   const round2 = (n: number) => Math.round(n * 100) / 100;
   return {
-    bmr: round2(bmr),
-    tdee: Math.round(tdee),
-    dailyCalories: Math.round(dailyCalories),
+    dailyCalories,
     dailyProtein: round2((dailyCalories * p) / 4),
     dailyCarbs: round2((dailyCalories * c) / 4),
     dailyFats: round2((dailyCalories * f) / 9),
   };
 }
+
+export const minCalories = (gender: string | null) => (gender === "feminino" ? 1200 : 1500);
+export const goalFactor = (goal: string | null) => (goal === "perda_de_peso" ? 0.75 : goal === "ganho_de_massa" ? 1.1 : 1);
 
 export function getWaterGoalMl(weightKg: number | string | null | undefined): number {
   const w = typeof weightKg === "string" ? parseFloat(weightKg) : weightKg;

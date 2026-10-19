@@ -4,6 +4,7 @@ set npm_config_yes=true
 if exist dist-web-status.txt del dist-web-status.txt
 echo === Passo 1/4: dependencias ===
 call npm install
+findstr /c:"expo-notifications" package.json >nul || call npx --yes expo install expo-camera expo-notifications > install-log.txt 2>&1
 echo === Passo 2/4: checando o codigo ===
 call npx tsc --noEmit > tsc-log.txt 2>&1
 echo === Passo 3/4: gerando a versao web ===

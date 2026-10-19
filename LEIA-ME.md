@@ -9,7 +9,12 @@ App iOS e Android feito com Expo (React Native), conectado ao banco Supabase `ri
 - **Início:** checklist do dia (treino, alimentação, água), sequência 🔥, nível (Bronze → Lenda), calorias, água (+200/+300/+500 ml e desfazer), peso do dia e treino do dia
 - **Nutrição:** resumo de calorias e macros; registro por foto, por texto (IA) ou manual; lista do dia por refeição; limite diário de IA (gratuito 3, premium 30)
 - **Treino:** montar o treino do dia com a biblioteca de exercícios (ou exercícios próprios), marcar cada exercício, concluir o treino; registrar corrida com ritmo; histórico
-- **Perfil:** dados, metas, IMC e sair
+- **Perfil:** dados, metas, IMC, lembretes e sair
+- **Seus números:** IMC, peso ideal, cintura, gordura corporal estimada, proteína, água, sono e fibras
+- **Meta inteligente (Evolução):** estima o gasto real pelo peso + alimentação (28 dias) e sugere nova meta de calorias
+- **Código de barras (Nutrição):** busca o produto na Open Food Facts (gratuita); câmera no app, número digitado no navegador
+- **Cardápio do dia (IA) e lista de mercado:** cardápio dentro das metas, botão "Comi isso" e ingredientes para a lista (usa 1 uso de IA)
+- **Lembretes:** água, refeições, treino e pesagem semanal, agendados no próprio celular (não funcionam no navegador)
 
 ## Testar pelo celular (sem PC)
 
@@ -30,9 +35,10 @@ Para atualizar essa versão: dois cliques em `publicar-web.bat` no PC e publicar
 
 ## Próximas etapas
 
-1. Apple Saúde / Health Connect (treinos do relógio e peso da balança) — exige build próprio (não roda no Expo Go)
+1. Apple Saúde / Health Connect (passos, treinos do relógio, peso da balança) (treinos do relógio e peso da balança) — exige build próprio (não roda no Expo Go)
 2. (feito) Excluir conta dentro do app. Login com Apple só será exigido se houver login com Google/redes sociais
 3. Plano de treino por IA
 4. Clube, ranking e notificações
 5. Plano pago com compras dentro do app
 6. Publicação na App Store e no Google Play
+7. WhatsApp: registrar refeição/água por mensagem (precisa de conta Meta Business e número próprio)

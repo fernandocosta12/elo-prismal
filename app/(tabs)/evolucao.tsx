@@ -9,6 +9,7 @@ import { toISODate } from "@/lib/dates";
 import { getWaterGoalMl } from "@/lib/nutrition";
 import { getLevel } from "@/lib/levels";
 import { Card, Muted, Section, Title } from "@/components/ui";
+import { AdaptiveCard } from "@/components/AdaptiveCard";
 import { colors, radius, space, type } from "@/theme";
 
 type Period = 7 | 30;
@@ -154,6 +155,8 @@ export default function Evolucao() {
               </View>
               <Text style={{ color: colors.primary, fontSize: 20 }}>›</Text>
             </Pressable>
+
+            <AdaptiveCard />
 
             {/* Números principais */}
             <View style={{ flexDirection: "row", gap: space.sm }}>

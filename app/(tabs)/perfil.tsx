@@ -148,6 +148,15 @@ export default function Perfil() {
           <Ionicons name="chevron-forward" size={20} color={colors.faint} />
         </Card>
 
+        <Card onPress={() => router.push("/lembretes")} style={{ flexDirection: "row", alignItems: "center", gap: space.md }}>
+          <Ionicons name="notifications-outline" size={22} color={colors.primary} />
+          <View style={{ flex: 1 }}>
+            <Text style={{ color: colors.text, fontWeight: "600", fontSize: 16 }}>Lembretes</Text>
+            <Muted style={{ fontSize: 13 }}>Água, refeições, treino e pesagem</Muted>
+          </View>
+          <Ionicons name="chevron-forward" size={20} color={colors.faint} />
+        </Card>
+
         <View style={{ gap: space.sm, marginTop: space.lg }}>
           <Button title="Sair da conta" variant="soft" onPress={signOut} />
           <Button title="Excluir minha conta" variant="danger" onPress={confirmDelete} loading={deleting} />

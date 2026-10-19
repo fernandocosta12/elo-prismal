@@ -41,6 +41,9 @@ function Gate() {
       <Stack.Screen name="onboarding" />
       <Stack.Screen name="(tabs)" />
       <Stack.Screen name="ideais" />
+      <Stack.Screen name="lembretes" />
+      <Stack.Screen name="cardapio" />
+      <Stack.Screen name="mercado" />
     </Stack>
   );
 }
